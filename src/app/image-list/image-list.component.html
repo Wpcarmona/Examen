@@ -1,0 +1,248 @@
+
+<section id="hero">
+  <div class="hero-container">
+    <div class="wow fadeIn">
+      <div class="hero-logo">
+        <img class="" src="../../assets/logo.png" alt="ProOnliPc">
+      </div>
+
+      <h1>Bienvenidos a Pixabay Studios</h1>
+      <h2><span class="rotating">Donde podras encontrar las imagenes que buscas y un mapa</span></h2>
+      <div class="actions">
+        <a href="#about" class="btn-get-started">Comencemos</a>
+        <a href="#services" class="btn-services">nuestros servicios</a>
+      </div>
+    </div>
+  </div>
+</section>
+<header id="header">
+  <div class="container">
+    <div id="logo" class="pull-left">
+      <a href="#hero"></a>
+      <!-- Descomenta abajo si prefieres usar una imagen de texto -->
+      <!--<h1><a href="#hero">Encabezado 1</a></h1>-->
+    </div>
+
+    <nav id="nav-menu-container">
+      <ul class="nav-menu">
+        <li class="menu-active"><a href="#hero">Inicio</a></li>
+        <li><a href="#about">Imagenes</a></li>
+        <li><a (click)="mapa()">Mapa</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#contact">Contactanos</a></li>
+      </ul>
+    </nav>
+    <!-- #nav-menu-container -->
+  </div>
+</header>
+
+<section id="about">
+  <section class="py-5 text-center container" >
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">PIXABAY Imagenes</h1> <br>
+            <h5 class="fw-light">busca por categorias la imagenes que deseas o escribe la palabra clave para buscar, puede seleccionar la imagen que desees para descargar!</h5> <br>
+            <div class="input-group mb-3" >
+                <div class="dropdown">
+                  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Categorias</button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" (click)="getCategory('science')">science</a></li>
+                        <li><a class="dropdown-item" (click)="getCategory('education')">education</a></li>
+                        <li><a class="dropdown-item" (click)="getCategory('people')">people</a></li>
+                        <li><a class="dropdown-item" (click)="getCategory('feelings')">feelings</a></li>
+                        <li><a class="dropdown-item" (click)="getCategory('computer')">computer</a></li>
+                        <li><a class="dropdown-item" (click)="getCategory('buildings')">buildings</a></li>
+                    </ul>
+                </div>
+                
+                <input type="text" maxlength="150" class="form-control" placeholder="Buscar" aria-label="Recipient's username" 
+                    aria-describedby="button-addon2" #textBusqueda (keyup.enter)="getImages(textBusqueda.value)" >
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="getImages(textBusqueda.value)" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                </button>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<div class="album">
+    <div class="container" >
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col" *ngFor="let image of images; index as i ">
+                <div class="card shadow-sm">
+                    <a href="" data-bs-toggle="modal"  data-bs-target="#viewImage">
+                        <img 
+                        style="object-fit: cover;" 
+                        class="bd-placeholder-img card-img-top" 
+                        width="100%" 
+                        height="225" 
+                        src={{image.webformatURL}}
+                        alt="Not found"
+                        (click)="viewPhoto(image.largeImageURL)"
+                        >
+                    </a>
+                    <div class="card-body">
+                      <span class="btn-group">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
+                          <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                          <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z"/>
+                        </svg>
+                        <p class="card-text">{{image.tags}}</p>
+                      </span><br><br>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <span  class="btn btn-sm btn-outline-secondary">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-dots-fill" viewBox="0 0 16 16">
+                                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                                  </svg>
+                                    {{image.comments}}</span>
+                                <span  class="btn btn-sm btn-outline-secondary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="fill: rgb(240, 94, 94);" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                      </svg>
+                                    {{image.likes}}</span>
+                                    
+                            </div>
+                            
+                            <small class="text-muted">
+                                by: {{image.user}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="viewImage" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" >
+    <div class="modal-content ">
+      
+      <div class="modal-body"  style="width: 100%; height:100%; padding: 0;">
+          <img 
+          style="object-fit: cover;" 
+          width="100%" 
+          height="100%" 
+          src={{this.photo}}
+          alt="Not found">
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="services">
+  <div class="container wow fadeInUp">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 class="section-title">Nuestros Servicios</h3>
+        <div class="section-title-divider"></div>
+        <p class="section-description">Ofrecemos una gran variedad de una sola busqueda de imagenes y tambien un mapa</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 service-item">
+        <div class="service-icon"><i class="fa fa-desktop"></i></div>
+        <h4 class="service-title"><a href="">Imagenes</a></h4>
+        <p class="service-description">Puedes buscar la imagen que desees mediante una palabra clave o simplemente seleccioando una de nuestras categorias</p>
+      </div>
+      <div class="col-md-4 service-item">
+        <div class="service-icon"><i class="fa fa-bar-chart"></i></div>
+        <h4 class="service-title"><a href="">Descarga de imagenes</a></h4>
+        <p class="service-description">Puedes descargar la imagen que desees solamente dandole click a la imagen y despues en la opcion de guardar imagen que se encuenetra en el click derecho</p>
+      </div>
+      <div class="col-md-4 service-item">
+        <div class="service-icon"><i class="fa fa-paper-plane"></i></div>
+        <h4 class="service-title"><a href="">Mapa</a></h4>
+        <p class="service-description">¨Puedes usar nuestro servicio de mapas en el que podras basicamente mente buscar una locacion</p>
+      </div>
+      <div class="col-md-4 service-item">
+        <div class="service-icon"><i class="fa fa-shopping-bag"></i></div>
+        <h4 class="service-title"><a href="">Proximamente Peliculas</a></h4>
+        <p class="service-description">Proximamente tendremos la opcion de poder ver caracteristicas de peliculas!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="team">
+  <div class="container wow fadeInUp">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 class="section-title">Nuestro Team</h3>
+        <div class="section-title-divider"></div>
+        <p class="section-description">Soy yo y solamente yo, no hay nadie mas que mantenga esto</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="member">
+          <div class="pic"><img src="../../assets/71Dbq8Px8HL._SL1425_.jpg" alt=""></div>
+          <h4>Pedro Carmna</h4>
+          <span>Programador muy Junior</span>
+          <div class="social">
+            <a href=""><i class="fa fa-twitter"></i></a>
+            <a href=""><i class="fa fa-facebook"></i></a>
+            <a href=""><i class="fa fa-google-plus"></i></a>
+            <a href=""><i class="fa fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="contact">
+  <div class="container wow fadeInUp">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 class="section-title">Contactame</h3>
+        <div class="section-title-divider"></div>
+        <p class="section-description">Puedes enviar un comentario si lo deseas!</p>
+      </div>
+    </div>
+
+    <div class="row">
+      
+      <div class="col-md-5 col-md-push-2">
+        <div class="form">
+          <div id="sendmessage">Your message has been sent. Thank you!</div>
+          <div id="errormessage"></div>
+          <form action="" method="post" role="form" class="contactForm">
+            <div class="form-group">
+              <input type="text" name="name" class="form-control" id="name" placeholder="Nombre" />
+              <div class="validation"></div>
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control" name="email" id="email" placeholder="Telefono"/>
+              <div class="validation"></div>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="subject" id="subject" placeholder="email" />
+              <div class="validation"></div>
+            </div>
+            <div class="form-group">
+              <textarea class="form-control" name="message" rows="5" placeholder="Mensaje"></textarea>
+              <div class="validation"></div>
+            </div>
+            <div class="text-center"><button type="submit">Enviar mensaje</button></div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
