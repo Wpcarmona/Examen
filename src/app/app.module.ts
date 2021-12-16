@@ -12,7 +12,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ImageListComponent } from './image-list/image-list.component';
 import { MapasComponent } from './mapas/mapas.component';
 import {StoreModule} from  '@ngrx/store';
-import { counterReducer } from './reducer/datos.reducer';
+import { counterReducer, mainReducer } from './reducer/datos.reducer';
 
 const appRoutes: Routes = [
   { path: '', component: ImageListComponent }
@@ -31,7 +31,8 @@ const appRoutes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
-    StoreModule.forRoot({count: counterReducer})
+    StoreModule.forRoot({count: counterReducer}),
+    StoreModule.forRoot({main: mainReducer})
   ],
   providers: [ImageService],
   bootstrap: [AppComponent]
