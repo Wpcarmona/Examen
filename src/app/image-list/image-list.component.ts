@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ImageService } from '../shared/image.service';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { ImageService } from '../services/image.service';
+import * as action from '../reducer/datos.actions'
+
 
 @Component({
   selector: 'app-image-list',
@@ -11,17 +15,18 @@ import { ImageService } from '../shared/image.service';
 export class ImageListComponent implements OnInit {
   images: any[] = [];
   searchQuery: string = "";
-  imagesFound = false;
-  searching = false;
   photo: string = "";
-  title = 'Pixabay';
+  count$ : Observable<any>
   constructor(
     private imageService: ImageService,
-    private router: Router
-    ) { }
+    private router: Router,
+    private store: Store<{ count: number}>
+    ) {
+      this.count$ = store.select('count')
+     }
 
     ngOnInit() {
-  
+     this.count$ = this.store.pipe(select('count'))
     }
 
   getImages(busqueda: string) {
@@ -33,18 +38,26 @@ export class ImageListComponent implements OnInit {
 
   }
 
-  viewPhoto(photo: string) {
-    this.photo = photo;
+  viewPhoto(image: string) {
+    this.photo = image;
+    this.store.dispatch(action.datos({image: image}))
   }
+
+  infoImage(image:any[]){
+    console.log(image)
+  }
+
 
   getCategory(category:string){
     this.imageService.category(category).subscribe(result =>{
       this.images = result["hits"]
+      console.log(this.images)
     })
   }
 
   mapa(){
     this.router.navigate(['mapa'])
   }
+
 
 }
